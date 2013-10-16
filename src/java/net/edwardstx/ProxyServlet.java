@@ -27,6 +27,7 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
@@ -34,6 +35,7 @@ import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.httpclient.protocol.Protocol;
 
 
 public class ProxyServlet extends HttpServlet {
@@ -126,6 +128,13 @@ public class ProxyServlet extends HttpServlet {
 		String stringMaxFileUploadSize = servletConfig.getInitParameter("maxFileUploadSize");
 		if(stringMaxFileUploadSize != null && stringMaxFileUploadSize.length() > 0) {
 			this.setMaxFileUploadSize(Integer.parseInt(stringMaxFileUploadSize));
+		}
+		
+    	try {
+        	Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(), 443);
+        	Protocol.registerProtocol("https", easyhttps);
+		} catch (Exception e) {
+			System.err.println("Fail to create EasySSLProtocolSocketFactory");
 		}
 	}
 	

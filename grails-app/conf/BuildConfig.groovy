@@ -11,6 +11,8 @@ grails.project.dependency.resolution = {
 		grailsCentral()
 		mavenLocal()
 		mavenCentral()
+
+		mavenRepo "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
 	}
 
 	dependencies {
@@ -20,6 +22,7 @@ grails.project.dependency.resolution = {
 		runtime('commons-logging:commons-logging:1.1.1') {
 			transitive = false
 		}
+		compile 'org.apache.commons:not-yet-commons-ssl:0.3.7'
 	}
 
 	plugins {
